@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>聊天室登录</title>
+</head>
+<body>
+
+<h2>WebSocket聊天室</h2>
+
+<input id="username" placeholder="输入用户名">
+
+<button onclick="login()">登录</button>
+
+<script>
+
+function login(){
+
+    let username=document.getElementById("username").value;
+
+    if(username===""){
+        alert("请输入用户名");
+        return;
+    }
+
+    location.href="chat.html?user="+username;
+}
+
+</script>
+
+</body>
+</html>
