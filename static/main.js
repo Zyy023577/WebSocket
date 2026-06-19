@@ -52,21 +52,46 @@
     ws.addEventListener('message', (ev) => {
       try {
         const data = JSON.parse(ev.data);
+        
+        // 处理不同消息类型
         if (data.type === 'error') {
-          loginError.innerText = data.msg || '连接错误';
+          loginError.innerText = data.msg || data.detail || '连接错误';
           ws.close();
-        } else if (data.type === 'system') {
+        } 
+        else if (data.type === 'system') {
           addMessage(data.msg, 'system');
-        } else if (data.type === 'users') {
+        } 
+        else if (data.type === 'user_list') {
           updateUsers(data.users || []);
-        } else if (data.type === 'chat') {
-          addMessage(`${data.user}: ${data.msg}`, 'chat');
-        } else {
-          // other types
+        } 
+        else if (data.type === 'login') {
+          addMessage(`[${data.username}] ${data.content}`, 'system');
+          if (data.users) updateUsers(data.users);
+        } 
+        else if (data.type === 'logout') {
+          addMessage(`[${data.username}] ${data.content}`, 'system');
+          if (data.users) updateUsers(data.users);
+        } 
+        else if (data.type === 'message') {
+          addMessage(`${data.username}: ${data.content}`, 'chat');
+        }
+        else if (data.type === 'private_message') {
+          addMessage(`[私聊] ${data.username}: ${data.content}`, 'private');
+        }
+        else if (data.type === 'typing') {
+          // 显示输入指示器
+          addMessage(`${data.username} 正在输入...`, 'typing');
+        }
+        else if (data.type === 'pong') {
+          // 心跳响应，不显示
+          console.log('收到心跳响应');
+        }
+        else {
+          // 其他消息类型
           addMessage(JSON.stringify(data));
         }
       } catch (e) {
-        // non-JSON or fallback
+        // 非 JSON 或其他错误
         addMessage(ev.data);
       }
     });
@@ -86,7 +111,13 @@
     e.preventDefault();
     const msg = messageInput.value.trim();
     if (!msg || !ws || ws.readyState !== WebSocket.OPEN) return;
-    ws.send(JSON.stringify({ msg }));
+    
+    // 发送消息，必须包含 type 字段
+    ws.send(JSON.stringify({ 
+      type: "message",
+      content: msg 
+    }));
+    
     messageInput.value = '';
   });
 })();
