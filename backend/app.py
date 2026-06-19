@@ -37,19 +37,20 @@ app = FastAPI(
 )
 
 
-# Serve static files
+# Serve static files (必须在其他路由之前)
 try:
-    app.mount("/static", StaticFiles(directory="../frontend"), name="static")
-except:
-    pass
+    app.mount("/static", StaticFiles(directory="../static"), name="static")
+except Exception as e:
+    print(f"Warning: Failed to mount static files: {e}")
 
 
 @app.get("/")
 async def root():
     """Root endpoint - serve index.html"""
     try:
-        return FileResponse("../frontend/index.html")
-    except:
+        return FileResponse("../static/index.html")
+    except Exception as e:
+        print(f"Error serving index.html: {e}")
         return {"message": "WebSocket Chat Room Server is running"}
 
 
