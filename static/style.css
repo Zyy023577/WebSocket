@@ -1,0 +1,16 @@
+:root { font-family: Arial, Helvetica, sans-serif; color: #222; }
+body { margin: 0; background: #f6f7fb; }
+#app { display:flex; height:100vh; }
+#login { margin:auto; text-align:center; }
+.hidden { display:none; }
+#chat { display:flex; width:100%; }
+#sidebar { width:220px; background:#fff; border-right:1px solid #e6e6e6; padding:12px; box-sizing:border-box; }
+#main { flex:1; display:flex; flex-direction:column; padding:12px; box-sizing:border-box; }
+#messages { flex:1; overflow:auto; padding:8px; background:#fff; border:1px solid #eaeaea; border-radius:4px; }
+.message { padding:6px 8px; margin:6px 0; border-radius:4px; }
+.message.system { color:#666; font-size:0.9em; }
+.message.chat { background:#f1f9ff; }
+#sendForm { display:flex; margin-top:8px; }
+#sendForm input { flex:1; padding:8px; border:1px solid #ddd; border-radius:4px 0 0 4px; }
+#sendForm button { padding:8px 12px; border:none; background:#1976d2; color:#fff; border-radius:0 4px 4px 0; cursor:pointer; }
+.error { color:#c62828; margin-top:8px; }
