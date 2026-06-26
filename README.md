@@ -339,35 +339,7 @@ ws.send(JSON.stringify({
 3. 连接被拒绝，显示错误提示
 ```
 
-## ⚙️ 配置选项
 
-### 服务器配置
-
-修改 `app.py` 中的 uvicorn 配置:
-
-```python
-uvicorn.run(
-    app,
-    host="0.0.0.0",        # 监听地址
-    port=8000,             # 端口号
-    log_level="info"       # 日志级别
-)
-```
-
-**常用配置**:
-- `host="127.0.0.1"` - 仅本地访问
-- `host="0.0.0.0"` - 允许外部访问
-- `port=8080` - 自定义端口
-- `log_level="debug"` - 调试模式
-
-### 客户端配置
-
-修改 `main.js` 中的 WebSocket 连接配置:
-
-```javascript
-// 自动适配 HTTP/HTTPS
-(location.protocol === 'https:' ? 'wss' : 'ws')
-```
 
 ## 🔒 安全考虑
 
